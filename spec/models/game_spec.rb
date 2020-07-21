@@ -130,4 +130,33 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:money)
     end
   end
+
+  # группа тестов на разные ситуации при ответе на вопрос
+  context '.answer_current_question!' do
+    it 'correct_answer' do
+      c_a = game_w_questions.current_game_question.correct_answer_key
+
+      expect(game_w_questions.answer_current_question!(c_a)).to be_truthy
+    end
+
+    it 'wrong_answer' do
+      expect(game_w_questions.answer_current_question!('z')).to be_falsey
+    end
+
+    it 'finish_answer' do
+      game_w_questions.current_level = Question::QUESTION_LEVELS.max
+      c_a = game_w_questions.current_game_question.correct_answer_key
+      expect(game_w_questions.finished?).to be_falsey
+
+      expect(game_w_questions.answer_current_question!(c_a)).to be_truthy
+      expect(game_w_questions.finished?).to be_truthy
+    end
+
+    it 'late_answer' do
+      game_w_questions.created_at = 1.hour.ago
+      c_a = game_w_questions.current_game_question.correct_answer_key
+
+      expect(game_w_questions.answer_current_question!(c_a)).to be_falsey
+    end
+  end
 end

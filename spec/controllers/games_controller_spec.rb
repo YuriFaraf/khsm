@@ -49,6 +49,4 @@ RSpec.describe GamesController, type: :controller do
       expect(flash[:notice]).to be
     end
   end
-
-
 end

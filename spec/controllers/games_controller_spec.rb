@@ -48,5 +48,37 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(game_path(game))
       expect(flash[:notice]).to be
     end
+
+    it '#show game' do
+      # Показываем по GET-запросу
+      get :show, id: game_w_questions.id
+      # Вытаскиваем из контроллера поле @game
+      game = assigns(:game)
+      # Игра не закончена
+      expect(game.finished?).to be_falsey
+      # Юзер именно тот, которого залогинили
+      expect(game.user).to eq(user)
+
+      # Проверяем статус ответа (200 ОК)
+      expect(response.status).to eq(200)
+      # Проверяем рендерится ли шаблон show (НЕ сам шаблон!)
+      expect(response).to render_template('show')
+    end
+
+    it 'answers correct' do
+      # Дёргаем экшен answer, передаем параметр params[:letter]
+      put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
+      game = assigns(:game)
+
+      # Игра не закончена
+      expect(game.finished?).to be_falsey
+      # Уровень больше 0
+      expect(game.current_level).to be > 0
+
+      # Редирект на страницу игры
+      expect(response).to redirect_to(game_path(game))
+      # Флеш пустой
+      expect(flash.empty?).to be_truthy
+    end
   end
 end

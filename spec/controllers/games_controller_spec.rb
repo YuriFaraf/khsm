@@ -147,6 +147,22 @@ RSpec.describe GamesController, type: :controller do
       expect(flash.empty?).to be_truthy
     end
 
+    it 'answers wrong' do
+      # Дёргаем экшен answer, передаем параметр params[:letter]
+      put :answer, id: game_w_questions.id, letter: 'e'
+      game = assigns(:game)
+
+      # Игра закончена
+      expect(game.finished?).to be_truthy
+      # Уровень 0
+      expect(game.current_level).to eq(0)
+
+      # Редирект на страницу пользователя
+      expect(response).to redirect_to(user_path(user))
+      # Инфа о правильном ответе
+      expect(flash[:alert]).to be
+    end
+
     # юзер берет деньги
     it 'takes money' do
       # вручную поднимем уровень вопроса до выигрыша 200

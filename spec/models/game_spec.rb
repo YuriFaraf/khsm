@@ -140,7 +140,9 @@ RSpec.describe Game, type: :model do
     end
 
     it 'wrong_answer' do
-      expect(game_w_questions.answer_current_question!('z')).to be_falsey
+      c_a = game_w_questions.current_game_question.correct_answer_key
+      w_a = game_w_questions.current_game_question.variants.except(c_a).to_a.flatten.first
+      expect(game_w_questions.answer_current_question!(w_a)).to be_falsey
       expect(game_w_questions.status).to eq(:fail)
     end
 

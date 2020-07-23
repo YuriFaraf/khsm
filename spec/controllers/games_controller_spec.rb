@@ -149,13 +149,13 @@ RSpec.describe GamesController, type: :controller do
 
     it 'answers wrong' do
       c_a = game_w_questions.current_game_question.correct_answer_key
-      w_a = game_w_questions.current_game_question.variants.except(c_a).to_a.flatten.first
+      w_a = game_w_questions.current_game_question.variants.keys.reject { |a| a == c_a }.sample
       # Дёргаем экшен answer, передаем параметр params[:letter]
       put :answer, id: game_w_questions.id, letter: w_a
       game = assigns(:game)
 
       # Игра закончена
-      expect(game.finished?).to eq(true)
+      expect(game.finished?).to be(true)
       expect(game.status).to eq(:fail)
       # Уровень 0
       expect(game.current_level).to eq(0)

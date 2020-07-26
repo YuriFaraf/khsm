@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
 
   resources :games, only: [:create, :show] do
-    put 'answer', on: :member # доп. метод ресурса - ответ на текущий вопро
-    put 'take_money', on: :member # доп. метод ресурса - игрок берет деньги
+    # Доп. методы ресурса:
+    put 'help', on: :member # помощь зала
+    put 'answer', on: :member # ответ на текущий вопрос
+    put 'take_money', on: :member #  игрок берет деньги
   end
 
   # Ресурс в единственном числе, но вопросЫ — для загрузки админом сразу пачки вопросов

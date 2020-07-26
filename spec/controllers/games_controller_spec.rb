@@ -220,5 +220,23 @@ RSpec.describe GamesController, type: :controller do
       expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq 2
       expect(response).to redirect_to(game_path(game))
     end
+
+    it 'uses friend call' do
+      # Проверяем, что у текущего вопроса нет подсказок
+      expect(game_w_questions.current_game_question.help_hash[:friend_call]).not_to be
+      # И подсказка не использована
+      expect(game_w_questions.friend_call_used).to be(false)
+
+      # Пишем запрос в контроллер с нужным типом (put — не создаёт новых сущностей, но что-то меняет)
+      put :help, id: game_w_questions.id , help_type: :friend_call
+      game = assigns(:game)
+
+      # Проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
+      expect(game.finished?).to be(false)
+      expect(game.friend_call_used).to be(true)
+      expect(game.current_game_question.help_hash[:friend_call]).to be
+      expect(game.current_game_question.help_hash[:friend_call]).to include(I18n.t('game_help.friend_call').gsub(/%{(name|variant)}/, ''))
+      expect(response).to redirect_to(game_path(game))
+    end
   end
 end

@@ -35,10 +35,20 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     arel (6.0.4)
     bcrypt (3.1.12)
     builder (3.2.3)
     byebug (11.0.1)
+    capybara (3.33.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      regexp_parser (~> 1.5)
+      xpath (~> 3.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -93,6 +103,8 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     less (2.6.0)
       commonjs (~> 0.2.7)
     less-rails (4.0.0)
@@ -112,6 +124,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     pg (1.1.4)
+    public_suffix (4.0.5)
     rack (1.6.11)
     rack-pjax (1.1.0)
       nokogiri (~> 1.5)
@@ -164,6 +177,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    regexp_parser (1.7.1)
     remotipart (1.4.4)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
@@ -223,17 +237,21 @@ GEM
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   byebug
+  capybara
   devise (~> 4.1.1)
   devise-i18n
   factory_bot_rails
   font-awesome-rails
   jquery-rails
+  launchy
   pg
   rails (~> 4.2.10)
   rails_12factor

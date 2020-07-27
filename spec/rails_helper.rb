@@ -72,4 +72,7 @@ RSpec.configure do |config|
   # https://github.com/plataformatec/devise/issues/4133
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
+  config.include Warden::Test::Helpers, type: :feature
 end
+
+Capybara.asset_host = "http://localhost:3000"
